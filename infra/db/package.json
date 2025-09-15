@@ -1,0 +1,23 @@
+{
+  "name": "@acme/db",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Database schema and migrations",
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:prod": "prisma migrate deploy",
+    "db:reset": "prisma migrate reset",
+    "db:seed": "tsx seed.ts",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.7.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.7.0",
+    "tsx": "^4.6.0",
+    "@faker-js/faker": "^8.3.0"
+  }
+}
