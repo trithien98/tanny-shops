@@ -12,13 +12,13 @@ describe('Order Model', () => {
         {
           productId: 'product_456',
           quantity: 2,
-          priceCents: 1499
-        }
-      ]
+          priceCents: 1499,
+        },
+      ],
     }
 
     const order = await Order.create(orderData)
-    
+
     expect(order).toBeDefined()
     expect(order.id).toBeDefined()
     expect(order.customerId).toBe('customer_123')
@@ -31,7 +31,7 @@ describe('Order Model', () => {
     const invalidData = {
       customerId: 'customer_123',
       status: 'INVALID_STATUS',
-      totalCents: 1999
+      totalCents: 1999,
     }
 
     await expect(Order.create(invalidData as any)).rejects.toThrow()
@@ -42,13 +42,13 @@ describe('Order Model', () => {
       customerId: 'customer_123',
       items: [
         { productId: 'product_1', quantity: 2, priceCents: 1000 },
-        { productId: 'product_2', quantity: 1, priceCents: 500 }
-      ]
+        { productId: 'product_2', quantity: 1, priceCents: 500 },
+      ],
     }
 
     const order = await Order.create(orderData)
     const calculatedTotal = order.calculateTotal()
-    
+
     expect(calculatedTotal).toBe(2500) // (2 * 1000) + (1 * 500)
   })
 
@@ -56,29 +56,29 @@ describe('Order Model', () => {
     const orderData = {
       customerId: 'customer_123',
       status: 'PENDING',
-      totalCents: 1999
+      totalCents: 1999,
     }
 
     const order = await Order.create(orderData)
     await order.updateStatus('CONFIRMED')
-    
+
     expect(order.status).toBe('CONFIRMED')
     expect(order.updatedAt).toBeDefined()
   })
 
   it('should find orders by customer', async () => {
     const customerId = 'customer_find_test'
-    
+
     await Order.create({
       customerId,
       status: 'PENDING',
-      totalCents: 1999
+      totalCents: 1999,
     })
-    
+
     await Order.create({
       customerId,
       status: 'CONFIRMED',
-      totalCents: 2999
+      totalCents: 2999,
     })
 
     const orders = await Order.findByCustomer(customerId)

@@ -5,14 +5,12 @@ import { app } from '../src/app'
 describe('Products API Contract', () => {
   describe('GET /api/products', () => {
     it('should return array of products', async () => {
-      const response = await request(app)
-        .get('/api/products')
-        .expect(200)
+      const response = await request(app).get('/api/products').expect(200)
 
       expect(response.body).toBeDefined()
       expect(Array.isArray(response.body.data)).toBe(true)
       expect(response.body.data.length).toBeGreaterThanOrEqual(0)
-      
+
       if (response.body.data.length > 0) {
         const product = response.body.data[0]
         expect(product).toHaveProperty('id')
@@ -87,7 +85,7 @@ describe('Products API Contract', () => {
         description: 'A new test product',
         priceCents: 2999,
         currency: 'USD',
-        categoryId: 'electronics'
+        categoryId: 'electronics',
       }
 
       const response = await request(app)
@@ -105,18 +103,15 @@ describe('Products API Contract', () => {
       const productData = {
         slug: 'unauthorized-product',
         title: 'Unauthorized Product',
-        priceCents: 1999
+        priceCents: 1999,
       }
 
-      await request(app)
-        .post('/api/products')
-        .send(productData)
-        .expect(401)
+      await request(app).post('/api/products').send(productData).expect(401)
     })
 
     it('should validate required fields', async () => {
       const invalidData = {
-        title: 'Missing slug and price'
+        title: 'Missing slug and price',
       }
 
       await request(app)

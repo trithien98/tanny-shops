@@ -8,11 +8,11 @@ describe('Product Model', () => {
       title: 'Test Product',
       description: 'A test product',
       priceCents: 1999,
-      currency: 'USD'
+      currency: 'USD',
     }
 
     const product = await Product.create(productData)
-    
+
     expect(product).toBeDefined()
     expect(product.id).toBeDefined()
     expect(product.slug).toBe('test-product')
@@ -23,7 +23,7 @@ describe('Product Model', () => {
 
   it('should validate required fields', async () => {
     const invalidData = {
-      title: 'Test Product'
+      title: 'Test Product',
       // missing slug and priceCents
     }
 
@@ -34,28 +34,30 @@ describe('Product Model', () => {
     const productData = {
       slug: 'duplicate-slug',
       title: 'Product 1',
-      priceCents: 1999
+      priceCents: 1999,
     }
 
     await Product.create(productData)
-    
+
     // Should fail on duplicate slug
-    await expect(Product.create({
-      ...productData,
-      title: 'Product 2'
-    })).rejects.toThrow()
+    await expect(
+      Product.create({
+        ...productData,
+        title: 'Product 2',
+      })
+    ).rejects.toThrow()
   })
 
   it('should find product by slug', async () => {
     const productData = {
       slug: 'findable-product',
       title: 'Findable Product',
-      priceCents: 2999
+      priceCents: 2999,
     }
 
     const created = await Product.create(productData)
     const found = await Product.findBySlug('findable-product')
-    
+
     expect(found).toBeDefined()
     expect(found?.id).toBe(created.id)
   })
